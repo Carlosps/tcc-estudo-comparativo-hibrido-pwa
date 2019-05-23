@@ -1,5 +1,7 @@
 {
   "name": "pwaTalk",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }

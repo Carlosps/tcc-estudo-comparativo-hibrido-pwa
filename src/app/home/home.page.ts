@@ -30,7 +30,7 @@ export class HomePage implements OnInit{
   }
 
   ngOnInit(){
-    this.http.get("/assets/data.json")
+    this.http.get("https://tcc-estudo-comparativo.firebaseio.com/pwa_features.json")
     .subscribe(
       res => this.pwa_features = res["pwa_features"]
     )

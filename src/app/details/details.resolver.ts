@@ -13,7 +13,7 @@ export class DetailsPageResolver implements Resolve<any> {
     let slug = route.params['slug'];
 
     return new Promise((resolve, reject) => {
-      this.http.get("/assets/data.json").subscribe(
+      this.http.get("https://tcc-estudo-comparativo.firebaseio.com/pwa_features.json").subscribe(
         res => {
           return resolve(
             res["pwa_features"].find(item => item.slug == slug)
