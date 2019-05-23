@@ -6,10 +6,10 @@ export const environment = {
   production: false,
   firebase: {
     apiKey: 'YOUR_API_KEY',
-    authDomain: 'pwa-talk-meetup.firebaseapp.com',
-    databaseURL: 'https://pwa-talk-meetup.firebaseio.com',
-    projectId: 'pwa-talk-meetup',
-    storageBucket: 'pwa-talk-meetup.appspot.com',
+    authDomain: 'tcc-estudo-comparativo.firebaseapp.com',
+    databaseURL: 'https://tcc-estudo-comparativo.firebaseio.com',
+    projectId: 'tcc-estudo-comparativo',
+    storageBucket: 'tcc-estudo-comparativo.appspot.com',
     messagingSenderId: 'YOUR_SENDER_ID'
   }
 };

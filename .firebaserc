@@ -1,5 +1,6 @@
 {
   "projects": {
-    "dev": "pwa-talk-meetup"
+    "dev": "tcc-estudo-comparativo",
+    "default": "tcc-estudo-comparativo"
   }
 }
