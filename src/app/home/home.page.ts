@@ -4,6 +4,12 @@ import { Router } from '@angular/router';
 
 import { Storage } from '@ionic/storage';
 
+// Constants
+import APLICATION from '../constants/app-contants';
+
+// Model
+import { PwaFeatureModel } from '../entities/pwa-feature-model';
+
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -12,7 +18,7 @@ import { Storage } from '@ionic/storage';
 export class HomePage implements OnInit {
   deferredPrompt: any;
   showInstallBtn: boolean = true;
-  pwa_features: any = [];
+  pwa_features: Array<PwaFeatureModel> = [];
 
   constructor(private http: HttpClient, private router: Router, private storage: Storage) {
     window.addEventListener('beforeinstallprompt', e => {
@@ -27,10 +33,10 @@ export class HomePage implements OnInit {
   ngOnInit() {
     this.storage.get('pwa_features').then(pwa_features => {
       if (!pwa_features) {
-        this.http.get('../assets/data.json').subscribe(
-          res => {
-            this.pwa_features = res['pwa_features'];
-            this.storage.set('pwa_features', res['pwa_features']);
+        this.http.get(APLICATION.DATA_PATH).subscribe(
+          (res: Array<PwaFeatureModel>) => {
+            this.pwa_features = res;
+            this.storage.set('pwa_features', res);
           },
           error => console.log('oops', error)
         );
