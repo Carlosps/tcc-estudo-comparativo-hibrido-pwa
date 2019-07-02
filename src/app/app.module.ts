@@ -14,6 +14,8 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireMessagingModule } from '@angular/fire/messaging';
 
+import { IonicStorageModule } from '@ionic/storage';
+
 import { environment } from '../environments/environment';
 
 @NgModule({
@@ -26,7 +28,8 @@ import { environment } from '../environments/environment';
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireMessagingModule,
-    ServiceWorkerModule.register('combined-sw.js', { enabled: environment.production })
+    ServiceWorkerModule.register('combined-sw.js', { enabled: environment.production }),
+    IonicStorageModule.forRoot()
     // ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [

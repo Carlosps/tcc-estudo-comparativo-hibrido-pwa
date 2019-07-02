@@ -2,22 +2,20 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 
+import { Storage } from '@ionic/storage';
+
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
-  styleUrls: ['home.page.scss'],
+  styleUrls: ['home.page.scss']
 })
-export class HomePage implements OnInit{
+export class HomePage implements OnInit {
   deferredPrompt: any;
   showInstallBtn: boolean = true;
-  pwa_features: any;
+  pwa_features: any = [];
 
-  constructor(
-    private http: HttpClient,
-    private router: Router
-  ) {
-
-    window.addEventListener('beforeinstallprompt', (e) => {
+  constructor(private http: HttpClient, private router: Router, private storage: Storage) {
+    window.addEventListener('beforeinstallprompt', e => {
       console.log('beforeinstallprompt Event fired');
       // Prevent Chrome 67 and earlier from automatically showing the prompt
       e.preventDefault();
@@ -25,17 +23,23 @@ export class HomePage implements OnInit{
       this.deferredPrompt = e;
       this.showInstallBtn = true;
     });
-
-
   }
+  ngOnInit() {
+    this.storage.get('pwa_features').then(pwa_features => {
+      if (!pwa_features) {
+        this.http.get('../assets/data.json').subscribe(
+          res => {
+            this.pwa_features = res['pwa_features'];
+            this.storage.set('pwa_features', res['pwa_features']);
+          },
+          error => console.log('oops', error)
+        );
+      } else {
+        this.pwa_features = pwa_features;
+      }
+    });
 
-  ngOnInit(){
-    this.http.get("https://tcc-estudo-comparativo.firebaseio.com/pwa_features.json")
-    .subscribe(
-      res => this.pwa_features = res["pwa_features"]
-    )
-
-    if(this.deferredPrompt === undefined){
+    if (this.deferredPrompt === undefined) {
       this.showInstallBtn = false;
     }
   }
@@ -45,8 +49,7 @@ export class HomePage implements OnInit{
       // Show the prompt
       this.deferredPrompt.prompt();
       // Wait for the user to respond to the prompt
-      this.deferredPrompt.userChoice
-      .then((choiceResult) => {
+      this.deferredPrompt.userChoice.then(choiceResult => {
         if (choiceResult.outcome === 'accepted') {
           console.log('User accepted the A2HS prompt');
         } else {
@@ -58,8 +61,7 @@ export class HomePage implements OnInit{
     }
   }
 
-  goToDetailsView(item){
-    this.router.navigate(["/details", item.slug]);
+  goToDetailsView(item) {
+    this.router.navigate(['/details', item.slug]);
   }
-
 }
